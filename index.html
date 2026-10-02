@@ -159,20 +159,16 @@
       <!-- Real-time Quota Badge & Terminal Status -->
       <div class="flex items-center space-x-2 sm:space-x-3">
         
-        <!-- Batch Quota Badge (X/10) -->
-        <div id="quotaHeaderBadge" class="flex items-center space-x-2 bg-sporty-card border border-sporty-border px-3 py-1.5 rounded-full text-xs font-mono">
-          <i class="fa-solid fa-bolt text-sporty-gold"></i>
-          <span class="text-gray-400 hidden sm:inline">QUOTA:</span>
-          <span id="quotaHeaderCount" class="text-white font-bold">0/10</span>
-        </div>
+
 
         <!-- Reference Authorization Status -->
-
-        <!-- Synthesized Audio Toggle -->
-        <button id="audioToggleBtn" onclick="toggleAudio()" class="w-9 h-9 rounded-xl bg-sporty-card hover:bg-sporty-border border border-sporty-border flex items-center justify-center text-gray-300 hover:text-white transition" title="Toggle Synthesized Audio">
-          <i id="audioIcon" class="fa-solid fa-volume-high text-xs text-sporty-green"></i>
-        </button>
-
+        <div id="authStatusBadge" onclick="handleAuthBadgeClick()" class="cursor-pointer flex items-center space-x-2 bg-sporty-card hover:bg-sporty-border border border-sporty-border px-3.5 py-1.5 rounded-full text-xs font-mono transition">
+          <i id="authLockIcon" class="fa-solid fa-lock text-sporty-red"></i>
+          <span id="authStatusText" class="text-gray-300 font-semibold">LOCKED</span>
+          <button id="lockTerminalBtn" onclick="lockAppSession(event)" class="hidden ml-1 text-[10px] bg-rose-500/20 text-sporty-red px-2 py-0.5 rounded hover:bg-rose-500/30 transition">
+            Lock
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -273,9 +269,8 @@
             </span>
 
             <h2 class="text-xl sm:text-2xl font-black text-white">Reference Authorization</h2>
-            <p class="text-xs text-gray-400 font-sans mt-1 max-w-sm mb-5">
-              Access to the AI Predictor requires an active session reference. 
-              Do not forget the reference number you used when making the 350 payment because that will be used to access the Predictions. Tap below to verify your confidential Reference Number.
+            <p class="text-xs text-gray-400 font-sans mt-1 max-w-sm mb-5">Do not forget the Reference number you used when making the GHC350 payment because that will be used to access the Predictions.
+               Tap below to verify your confidential Reference Number.
             </p>
 
             <button onclick="revealReferenceInputSection()" id="showReferenceInputBtn" class="pulse-trigger-btn w-full max-w-xs py-4 rounded-xl bg-sporty-red hover:bg-sporty-redHover active:scale-95 text-white font-mono font-bold text-sm shadow-xl shadow-sporty-red/40 transition flex items-center justify-center gap-2.5">
@@ -1177,8 +1172,8 @@
       const input = document.getElementById('mainReferenceInput');
       const val = input.value.trim();
 
-      // Check strictly against confidential authorization reference code (88)
-      if (val === '88') {
+      // Check strictly against confidential authorization reference code (7060)
+      if (val === '7060') {
         soundUnlockChime();
         unlockAppSession();
         input.value = '';
@@ -1261,7 +1256,7 @@
       const input = document.getElementById('modalReferenceInput');
       const val = input.value.trim();
 
-      if (val === '5253') {
+      if (val === '7060') {
         soundUnlockChime();
         unlockAppSession();
         closeVerificationModal();
@@ -1308,10 +1303,7 @@
 
       const badge = document.getElementById('authStatusBadge');
       badge.className = 'cursor-pointer flex items-center space-x-2 bg-sporty-green/20 hover:bg-sporty-green/30 border border-sporty-green/50 px-3.5 py-1.5 rounded-full text-xs font-mono transition';
-      document.getElementById('authLockIcon').className = 'fa-solid fa-lock-open text-sporty-green';
-      document.getElementById('authStatusText').innerText = 'VIP VERIFIED';
-      document.getElementById('authStatusText').className = 'text-sporty-green font-bold';
-      document.getElementById('lockTerminalBtn').classList.remove('hidden');
+  document.getElementById('lockTerminalBtn').classList.remove('hidden');
 
       // Reset Trigger Button
       const triggerBtn = document.getElementById('manualScanTriggerBtn');
